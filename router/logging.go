@@ -4,8 +4,9 @@ import (
 	"net"
 	"net/http"
 
-	"github.com/imgproxy/imgproxy/v3/ierrors"
 	log "github.com/sirupsen/logrus"
+
+	"github.com/imgproxy/imgproxy/v3/ierrors"
 )
 
 func LogRequest(reqID string, r *http.Request) {
@@ -33,12 +34,14 @@ func LogResponse(reqID string, r *http.Request, status int, err *ierrors.Error, 
 	}
 
 	clientIP, _, _ := net.SplitHostPort(r.RemoteAddr)
+	authorizationHeader := r.Header.Get("Authorization")
 
 	fields := log.Fields{
-		"request_id": reqID,
-		"method":     r.Method,
-		"status":     status,
-		"client_ip":  clientIP,
+		"request_id":    reqID,
+		"method":        r.Method,
+		"status":        status,
+		"client_ip":     clientIP,
+		"authorization": authorizationHeader,
 	}
 
 	if err != nil {

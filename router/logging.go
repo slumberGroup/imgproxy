@@ -42,6 +42,7 @@ func LogResponse(reqID string, r *http.Request, status int, err *ierrors.Error, 
 		"status":        status,
 		"client_ip":     clientIP,
 		"authorization": authorizationHeader,
+		"user_agent":    r.UserAgent(),
 	}
 
 	if err != nil {
